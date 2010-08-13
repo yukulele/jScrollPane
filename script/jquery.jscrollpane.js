@@ -73,7 +73,8 @@
 			function initialise(s)
 			{
 
-				var clonedElem, tempWrapper, firstChild, lastChild, isMaintainingPositon, lastContentX, lastContentY;
+				var clonedElem, tempWrapper, firstChild, lastChild, isMaintainingPositon, lastContentX, lastContentY,
+						hasContainerChangedSize, hasContentsKeptSize;
 
 				settings = s;
 
@@ -112,7 +113,40 @@
 					firstChild.css('margin-top', 0);
 					lastChild.css('margin-bottom', 0);
 				} else {
-					if (elem.outerWidth() == contentWidth && elem.outerHeight() == contentHeight) {
+
+					hasContentsKeptSize = elem.outerWidth() == contentWidth && elem.outerHeight() == contentHeight;
+console.log(container);
+
+					container.css(
+						{
+							'width': null,
+							'height': null
+						}
+					);
+					pane.css(
+						{
+							'width': null
+						}
+					);
+					var currentWidth = container.innerWidth(), currentHeight = container.innerHeight();
+
+					hasContainerChangedSize = (currentWidth != paneWidth ||
+												currentHeight != paneHeight) &&
+												currentWidth > 0 && currentHeight > 0;
+					console.log(hasContainerChangedSize, container.outerWidth(), paneWidth, container.outerHeight(), paneHeight);
+					if (hasContainerChangedSize) {
+						paneWidth = container.outerWidth();
+						paneHeight = container.outerHeight();
+					}
+					
+					if (hasContainerChangedSize) {
+						container.css(
+							{
+								'width': paneWidth + 'px',
+								'height': paneHeight + 'px'
+							}
+						);
+					} else if (hasContentsKeptSize) {
 						// Nothing has changed since we last initialised, lets just abort
 						return;
 					}
