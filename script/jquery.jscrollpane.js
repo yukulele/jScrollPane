@@ -81,9 +81,8 @@
 				if (pane == undefined) {
 
 					elem.css('overflow', 'hidden'); // So we are measuring it without scrollbars
-					// TODO: Deal with where width/ height is 0 as it probably means the element is hidden and we should
-					// come back to it later and check once it is unhidden...
-					paneWidth = elem.innerWidth();
+					// Use paneWidth if it is passed in as IE6 can't properly measure!
+					paneWidth = settings.paneWidth || elem.innerWidth();
 					paneHeight = elem.innerHeight();
 					pane = $('<div class="jspPane" />').wrap(
 						$('<div class="jspContainer" />')
@@ -921,7 +920,8 @@
 		'arrowRepeatFreq'			: 100,
 		'arrowScrollOnHover'		: false,
 		'verticalArrowPositions'	: 'split',
-		'horizontalArrowPositions'	: 'split'
+		'horizontalArrowPositions'	: 'split',
+		'paneWidth'					: undefined
 	};
 
 })(jQuery,this);
