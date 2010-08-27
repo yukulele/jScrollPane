@@ -749,16 +749,17 @@
 			
 			function initKeyboardNav()
 			{
-				var pressed, pressedTimer;
+				var pressed;
 				elem.attr('tabindex', 0)
-					.unbind('keydown.jsp')
+					.unbind('keypress.jsp')
 					.bind(
-						'keydown.jsp',
+						'keypress.jsp',
 						function(e)
 						{
 							if(e.target !== elem[0]){
 								return;
 							}
+
 							var dX = horizontalDragPosition, dY = verticalDragPosition, step = pressed ? 2 : 16;
 							switch(e.keyCode) {
 								case 40: // down
@@ -789,10 +790,6 @@
 
 							if( !(dX == horizontalDragPosition && dY == verticalDragPosition) ){
 								pressed = true;
-								clearTimeout(pressedTimer);
-								pressedTimer = setTimeout(function(){
-									pressed = false;
-								}, 260);
 								return false;
 							}
 						}
