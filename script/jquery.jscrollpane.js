@@ -529,49 +529,56 @@
 				);
 			}
 
+			function handleTrackClick(dir, axis, offsetProp)
+			{
+				return function(e)
+				{
+					if (e.originalTarget == e.currentTarget) {
+						var clickedTrack = $(this),
+							scrollInt = setInterval(
+								function()
+								{
+									var offset = clickedTrack.offset(),
+												pos = e['page' + axis] - offset[offsetProp],
+												p = jsp[dir + 'DragPosition'],
+												h = jsp[dir + 'DragHeight'],
+												f = jsp['positionDrag' + axis];
+									console.log(jsp, dir, p, h, f);
+									if (p + h < pos) {
+										f(p + settings.trackClickSpeed);
+									} else if (pos < p) {
+										f(p - settings.trackClickSpeed);
+									} else {
+										cancelClick();
+									}
+								},
+								settings.trackClickRepeatFreq
+							),
+							cancelClick = function()
+							{
+								scrollInt && clearInterval(scrollInt);
+								scrollInt = null;
+								$(document).unbind('mouseup.jsp', cancelClick);
+							};
+						$(document).bind('mouseup.jsp', cancelClick);
+						return false;
+					}
+				};
+			}
+
 			function initClickOnTrack()
 			{
 				removeClickOnTrack();
 				if (isScrollableV) {
 					verticalTrack.bind(
 						'mousedown.jsp',
-						function(e)
-						{
-							if (e.originalTarget == e.currentTarget) {
-								var clickedTrack = $(this),
-									scrollInt = setInterval(
-										function()
-										{
-											var offset = clickedTrack.offset(), pos = e.pageY - offset.top;
-											if (verticalDragPosition + verticalDragHeight < pos) {
-												positionDragY(verticalDragPosition + settings.trackClickSpeed);
-											} else if (pos < verticalDragPosition) {
-												positionDragY(verticalDragPosition - settings.trackClickSpeed);
-											} else {
-												cancelClick();
-											}
-										},
-										settings.trackClickRepeatFreq
-									),
-									cancelClick = function()
-									{
-										scrollInt && clearInterval(scrollInt);
-										scrollInt = null;
-										$(document).unbind('mouseup.jsp', cancelClick);
-									};
-								$(document).bind('mouseup.jsp', cancelClick);
-								return false;
-							}
-						}
+						handleTrackClick('vertical', 'Y', 'top')
 					);
 				}
 				if (isScrollableH) {
 					horizontalTrack.bind(
 						'mousedown.jsp',
-						function(e)
-						{
-							// TODO
-						}
+						handleTrackClick()
 					);
 				}
 			}
