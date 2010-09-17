@@ -422,6 +422,12 @@
 				);
 
 				horizontalDragPosition = 0;
+
+				var scrollbarHeight = settings.horizontalGutter + horizontalTrack.outerHeight();
+				
+				// Make the container and element higher to allow for the scrollbar??!?!
+				elem.height(paneHeight + scrollbarHeight);
+				container.height(paneHeight + scrollbarHeight);
 			}
 
 			function resizeScrollbars()
