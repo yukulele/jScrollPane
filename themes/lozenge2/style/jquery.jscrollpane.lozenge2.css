@@ -1,0 +1,153 @@
+
+.jspHorizontalBar,
+.jspVerticalBar,
+.jspTrack
+{
+	background: #eeeef4;
+}
+
+.jspDrag
+{
+	background:  transparent;
+}
+
+.jspTrack .jspActive,
+.jspTrack .jspHover,
+.jspDrag:hover
+{
+	background: transparent;
+}
+
+.jspHorizontalBar
+{
+	height: 20px;
+}
+
+.jspHorizontalBar .jspDrag
+{
+	position: relative;
+}
+
+.jspHorizontalBar .jspDrag .jspDragLeft
+{
+	background: url(../image/h_drag_left.png) no-repeat;
+	width: 12px;
+	height: 100%;
+	float: left;
+}
+
+.jspHorizontalBar .jspDrag .jspDragStretch
+{
+	background: url(../image/h_drag_stretch.png) repeat-x;
+	height: 100%;
+	float: left;
+}
+
+.jspHorizontalBar .jspDrag .jspDragStretch .jspDragCenter
+{
+	background: url(../image/h_drag_center.png) no-repeat;
+	width: 19px;
+	height: 100%;
+	margin: 0 auto;
+}
+
+.jspHorizontalBar .jspDrag .jspDragRight
+{
+	background: url(../image/h_drag_right.png) no-repeat;
+	width: 13px;
+	height: 100%;
+	float: left;
+}
+
+.jspVerticalBar
+{
+	width: 20px;
+}
+
+.jspVerticalBar .jspDrag
+{
+	position: relative;
+}
+
+.jspVerticalBar .jspDrag .jspDragTop
+{
+	background: url(../image/v_drag_top.png) no-repeat;
+	height: 12px;
+	width: 100%;
+}
+
+.jspVerticalBar .jspDrag .jspDragStretch
+{
+	background: url(../image/v_drag_stretch.png) repeat-y;
+	width: 100%;
+}
+
+.jspVerticalBar .jspDrag .jspDragStretch .jspDragCenter
+{
+	background: url(../image/v_drag_center.png) no-repeat 0 center;
+	height: 19px;
+	width: 100%;
+	height: 100%;
+}
+
+.jspVerticalBar .jspDrag .jspDragBottom
+{
+	background: url(../image/v_drag_bottom.png) no-repeat;
+	height: 13px;
+	width: 100%;
+}
+
+
+.jspArrow
+{
+	background: url(../image/ui-icons_222222_256x240.png) no-repeat;
+	
+	-moz-border-radius: 10px;
+	-webkit-border-radius: 10px;
+	border-radius: 10px;
+}
+
+.jspVerticalBar>.jspActive,
+.jspArrow:hover
+{
+	background-image: url('../image/ui-icons_cd0a0a_256x240.png');
+}
+
+.jspVerticalBar>.jspDisabled,
+.jspVerticalBar>.jspDisabled:hover,
+.jspHorizontalBar>.jspDisabled,
+.jspHorizontalBar>.jspDisabled:hover
+{
+	background-color: transparent;
+	background-image: url('../image/ui-icons_888888_256x240.png');
+}
+
+.jspVerticalBar .jspArrow
+{
+	height: 15px;
+}
+
+.jspHorizontalBar .jspArrow
+{
+	width: 15px;
+}
+
+.jspArrowUp
+{
+	background-position: 0 0;
+}
+
+.jspArrowDown
+{
+	background-position: -64px 0 !important; 
+}
+
+.jspArrowLeft
+{
+	background-position: -96px 0 !important;
+}
+
+.jspArrowRight
+{
+	background-position: -32px 0 !important;
+}

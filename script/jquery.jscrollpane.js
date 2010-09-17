@@ -55,8 +55,8 @@
 		{
 
 			var settings, jsp = this, pane, paneWidth, paneHeight, container, contentWidth, contentHeight,
-				percentInViewH, percentInViewV, isScrollableV, isScrollableH, verticalDrag, dragMaxY,
-				verticalDragPosition, horizontalDrag, dragMaxX, horizontalDragPosition,
+				percentInViewH, percentInViewV, isScrollableV, isScrollableH, verticalDrag, verticalStretch, dragMaxY,
+				verticalDragPosition, horizontalDrag, horizontalStretch, dragMaxX, horizontalDragPosition,
 				verticalBar, verticalTrack, scrollbarWidth, verticalTrackHeight, verticalDragHeight, arrowUp, arrowDown,
 				horizontalBar, horizontalTrack, horizontalTrackWidth, horizontalDragWidth, arrowLeft, arrowRight,
 				reinitialiseInterval, originalPadding, originalPaddingTotalWidth, previousPaneWidth,
@@ -246,6 +246,9 @@
 							$('<div class="jspTrack" />').append(
 								$('<div class="jspDrag" />').append(
 									$('<div class="jspDragTop" />'),
+									$('<div class="jspDragStretch" />').append(
+											$('<div class="jspDragCenter" />')
+										),
 									$('<div class="jspDragBottom" />')
 								)
 							),
@@ -256,6 +259,7 @@
 					verticalBar = container.find('>.jspVerticalBar');
 					verticalTrack = verticalBar.find('>.jspTrack');
 					verticalDrag = verticalTrack.find('>.jspDrag');
+					verticalStretch = verticalDrag.find('>.jspDragStretch');
 
 					if (settings.showArrows) {
 						arrowUp = $('<a class="jspArrow jspArrowUp" />').bind(
@@ -341,6 +345,9 @@
 							$('<div class="jspTrack" />').append(
 								$('<div class="jspDrag" />').append(
 									$('<div class="jspDragLeft" />'),
+									$('<div class="jspDragStretch" />').append(
+											$('<div class="jspDragCenter" />')
+										),
 									$('<div class="jspDragRight" />')
 								)
 							),
@@ -351,6 +358,7 @@
 					horizontalBar = container.find('>.jspHorizontalBar');
 					horizontalTrack = horizontalBar.find('>.jspTrack');
 					horizontalDrag = horizontalTrack.find('>.jspDrag');
+					horizontalStretch = horizontalDrag.find('>.jspDragStretch');
 
 					if (settings.showArrows) {
 						arrowLeft = $('<a class="jspArrow jspArrowLeft" />').bind(
@@ -413,15 +421,15 @@
 					}
 				);
 
-				horizontalTrack.width(horizontalTrackWidth + 'px');
 				horizontalDragPosition = 0;
 			}
 
 			function resizeScrollbars()
 			{
+				var horizontalTrackHeight, verticalTrackWidth, w, h;
 				if (isScrollableH && isScrollableV) {
-					var horizontalTrackHeight = horizontalTrack.outerHeight(),
-						verticalTrackWidth = verticalTrack.outerWidth();
+					horizontalTrackHeight = horizontalTrack.outerHeight();
+					verticalTrackWidth = verticalTrack.outerWidth();
 					verticalTrackHeight -= horizontalTrackHeight;
 					$(horizontalBar).find('>.jspCap:visible,>.jspArrow').each(
 						function()
@@ -453,6 +461,15 @@
 						horizontalDragWidth = settings.horizontalDragMinWidth;
 					}
 					horizontalDrag.width(horizontalDragWidth + 'px');
+
+					w = horizontalDragWidth;
+					horizontalDrag.find('>.jspDragLeft,>.jspDragRight').each(
+						function()
+						{
+							w -= $(this).outerWidth();
+						}
+					);
+					horizontalStretch.width(w+'px');
 					dragMaxX = horizontalTrackWidth - horizontalDragWidth;
 					_positionDragX(horizontalDragPosition); // To update the state for the arrow buttons
 				}
@@ -464,6 +481,15 @@
 						verticalDragHeight = settings.verticalDragMinHeight;
 					}
 					verticalDrag.height(verticalDragHeight + 'px');
+
+					h = verticalDragHeight;
+					verticalDrag.find('>.jspDragTop,>.jspDragBottom').each(
+						function()
+						{
+							h -= $(this).outerHeight();
+						}
+					);
+					verticalStretch.height(h+'px');
 					dragMaxY = verticalTrackHeight - verticalDragHeight;
 					_positionDragY(verticalDragPosition); // To update the state for the arrow buttons
 				}
