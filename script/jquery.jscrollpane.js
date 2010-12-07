@@ -529,7 +529,7 @@
 									scrollTO = setTimeout(doScroll, settings.trackClickRepeatFreq * (initial ? 3 : 1));
 									initial = false;
 									var offset = clickedTrack.offset(),
-										pos = e.pageX - offset.left - horizontalDragHeight / 2,
+										pos = e.pageX - offset.left - horizontalDragWidth / 2,
 										contentDragX = paneWidth * settings.scrollPagePercent,
 										dragX = dragMaxX * contentDragX / (contentWidth - paneWidth);
 									if (direction < 0) {
